@@ -51,7 +51,7 @@ const transactionController = {
 			const updatedTransaction = await transaction.save();
 			res.json(updatedTransaction);
 		}
-		res.json({ message: "Nothing is updated!" });
+		throw new Error("Transaction not found or user not authorized!");
 	}),
 	delete: asyncHandler(async (req, res) => {
 		const transaction = await Transaction.findById(req.params.id);
@@ -59,7 +59,7 @@ const transactionController = {
 			await Transaction.findByIdAndDelete(req.params.id);
 			res.json({ message: "Transaction is removed" });
 		}
-		res.json({ message: "Nothing is deleted!" });
+		throw new Error("Transaction not found or user not authorized!");
 	}),
 };
 module.exports = transactionController;

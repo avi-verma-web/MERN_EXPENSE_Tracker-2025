@@ -9,6 +9,16 @@ categoryRouter.post(
 	isAuthenticated,
 	categoryController.create
 );
+categoryRouter.put(
+	"/api/v1/categories/update/:id",
+	isAuthenticated,
+	categoryController.update
+);
+categoryRouter.delete(
+	"/api/v1/categories/delete/:id",
+	isAuthenticated,
+	categoryController.delete
+);
 categoryRouter.get(
 	"/api/v1/categories/lists",
 	isAuthenticated,
