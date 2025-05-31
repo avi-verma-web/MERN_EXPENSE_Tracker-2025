@@ -1,23 +1,31 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { IoLogOutOutline } from "react-icons/io5";
 
 import { SiAuthy } from "react-icons/si";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../../redux/slice/authSlice";
+import { removeUserFromStorage } from "../../utils/manageStorage";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function PrivateNavbar() {
+  const dispatch = useDispatch()
+  const logoutHandler = () => {
+    dispatch(logoutAction())
+    removeUserFromStorage()
+  }
   return (
-    <Disclosure as="nav" className="bg-white ">
+    <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 justify-start items-center">
-              <div className="flex justify-center flex-row w-full">
+              <div className="flex flex-row w-full">
                 <div className="-ml-2 mr-2 flex items-left md:hidden">
                   {/* Mobile menu button */}
                   <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -78,7 +86,7 @@ export default function PrivateNavbar() {
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <button
-                    // onClick={logoutHandler}
+                    onClick={logoutHandler}
                     type="button"
                     className="relative m-2 inline-flex items-center gap-x-1.5 rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
                   >

@@ -5,27 +5,40 @@ import { useMutation } from "@tanstack/react-query";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { loginAPI } from "../../services/users/userServices";
 import AlertMessage from "../Alert/AlertMessage";
-
+import { loginAction } from "../../redux/slice/authSlice";
+import { useDispatch } from "react-redux"
+import { USER_INFO } from "../../utils/userStorageKey";
+import { useNavigate } from "react-router-dom";
 const validationSchema = Yup.object({
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string().min(5, "Password must be atleast 5 characters long").required("Password is required")
 })
 const LoginForm = () => {
+  const navigate = useNavigate()
+
+  const dispatch = useDispatch()
   const { mutateAsync, isSuccess, isError, error, isPending } = useMutation({
     mutationFn: loginAPI,
     mutationKey: ['login']
   });
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: ""
+      email: "masyn@gmail11.com",
+      password: "1234567"
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      mutateAsync(values).then((data) => console.log(data)).catch(e => console.log(e))
+      mutateAsync(values).then((data) => {
+        dispatch(loginAction(data))
+        localStorage.setItem(USER_INFO, JSON.stringify(data))
+      }).catch(e => console.log(e))
     }
   });
-
+  useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => navigate("/profile"), 3000)
+    }
+  }, [isSuccess, isError, error, isPending]);
 
   return (
     <form onSubmit={formik.handleSubmit} className="max-w-md mx-auto my-10 bg-white p-6 rounded-xl shadow-lg space-y-6 border border-gray-200">

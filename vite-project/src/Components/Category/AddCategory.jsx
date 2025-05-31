@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -8,25 +8,31 @@ import {
   FaWallet,
 } from "react-icons/fa";
 import { SiDatabricks } from "react-icons/si";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { addCategoryAPI } from "../../services/category/categoryServices";
+import AlertMessage from "../Alert/AlertMessage";
 
-const validationSchema = Yup.object({
-  name: Yup.string()
-    .required("Category name is required")
-    .oneOf(["income", "expense"]),
-  type: Yup.string()
-    .required("Category type is required")
-    .oneOf(["income", "expense"]),
-});
-
-const UpdateCategory = () => {
+const AddCategory = () => {
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .required("Category name is required"),
+    type: Yup.string()
+      .required("Category type is required")
+      .oneOf(["income", "expense"]),
+  });
+  const { mutateAsync, isSuccess, isError, error } = useMutation({
+    mutationFn: addCategoryAPI,
+    mutationKey: ['login']
+  });
   const formik = useFormik({
     initialValues: {
       type: "",
       name: "",
     },
-    onSubmit: (values) => {},
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      mutateAsync(values).then(data => console.log(data)).catch(e => console.log(e))
+    }
   });
 
   return (
@@ -36,12 +42,11 @@ const UpdateCategory = () => {
     >
       <div className="text-center">
         <h2 className="text-2xl font-semibold text-gray-800">
-          Update Category
+          Add New Category
         </h2>
         <p className="text-gray-600">Fill in the details below.</p>
       </div>
-      {/* Display alert message */}
-      {/* {isError && (
+      {isError && (
         <AlertMessage
           type="error"
           message={
@@ -53,10 +58,9 @@ const UpdateCategory = () => {
       {isSuccess && (
         <AlertMessage
           type="success"
-          message="Category updated successfully, redirecting..."
+          message="Category added successfully"
         />
-      )} */}
-      {/* Category Type */}
+      )}
       <div className="space-y-2">
         <label
           htmlFor="type"
@@ -78,8 +82,6 @@ const UpdateCategory = () => {
           <p className="text-red-500 text-xs">{formik.errors.type}</p>
         )}
       </div>
-
-      {/* Category Name */}
       <div className="flex flex-col">
         <label htmlFor="name" className="text-gray-700 font-medium">
           <SiDatabricks className="inline mr-2 text-blue-500" />
@@ -96,16 +98,14 @@ const UpdateCategory = () => {
           <p className="text-red-500 text-xs italic">{formik.errors.name}</p>
         )}
       </div>
-
-      {/* Submit Button */}
       <button
         type="submit"
         className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-200 transform"
       >
-        Update Category
+        Add Category
       </button>
     </form>
   );
 };
 
-export default UpdateCategory;
+export default AddCategory;
