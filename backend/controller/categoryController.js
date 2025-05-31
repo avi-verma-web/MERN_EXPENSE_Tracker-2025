@@ -58,7 +58,6 @@ const categoryController = {
 			);
 			res.json(updatedCategory);
 		}
-		
 	}),
 	delete: asyncHandler(async (req, res) => {
 		const categoryId = req.params.id;
@@ -70,7 +69,7 @@ const categoryController = {
 				{ $set: { category: defaultCategory } }
 			);
 			await Category.findByIdAndDelete(categoryId);
-			res.json("Category deleted");
+			res.json({ message: "Category deleted" });
 		}
 		throw new Error("Category not found or user not authorized");
 	}),

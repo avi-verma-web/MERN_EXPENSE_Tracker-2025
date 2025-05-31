@@ -4,7 +4,9 @@ const userRouter = require("./routes/userRouter");
 const errorHandler = require("./middleWares/errorhandlerMiddleware");
 const categoryRouter = require("./routes/categoryRouter");
 const transactionRouter = require("./routes/transactionRouter");
+const cors = require("cors");
 require("dotenv").config();
+
 const mongo_url = `mongodb+srv://imavinashverma99:${process.env.mongo_pw}@cluster0.vkhuehu.mongodb.net/mern_expense_tracker?retryWrites=true&w=majority&appName=Cluster0`;
 // Connect mongodb
 mongoose
@@ -14,6 +16,11 @@ mongoose
 
 const app = express();
 const PORT = process.env.PORT || 8000;
+app.use(
+	cors({
+		origin: ["http://localhost:5173"],
+	})
+);
 // req.body parser
 app.use(express.json());
 // routes
