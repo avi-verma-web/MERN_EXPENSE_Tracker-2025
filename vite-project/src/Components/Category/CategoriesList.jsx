@@ -6,7 +6,7 @@ import { deleteCategoryAPI, listCategoriesAPI } from "../../services/category/ca
 import AlertMessage from "../Alert/AlertMessage";
 
 const CategoriesList = () => {
-  const { data, isError, isLoading, isFetched, error, refetch } = useQuery({ queryFn: listCategoriesAPI, queryKey: ['list-categories'] })
+  const { data, isError, isLoading, error, refetch } = useQuery({ queryFn: listCategoriesAPI, queryKey: ['list-categories'] })
   const { mutateAsync } = useMutation(
     {
       mutationFn: deleteCategoryAPI,

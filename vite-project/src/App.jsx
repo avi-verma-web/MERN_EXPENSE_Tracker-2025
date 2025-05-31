@@ -11,6 +11,7 @@ import CategoriesList from "./Components/Category/CategoriesList"
 import { useSelector } from 'react-redux'
 import UpdateCategory from './Components/Category/UpdateCategory'
 import TransactionForm from './Components/Transactions/TransactionForm'
+import Dashboard from './Components/Users/Dashboard'
 
 function App() {
   const user = useSelector((state) => state.auth.user);
@@ -26,6 +27,7 @@ function App() {
         <Route path='/categories' element={<CategoriesList></CategoriesList>}></Route>
         <Route path='/update-category/:id' element={<UpdateCategory></UpdateCategory>}></Route>
         <Route path='/add-transaction' element={<TransactionForm></TransactionForm>}></Route>
+        <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
 
       </Routes>
     </BrowserRouter>
