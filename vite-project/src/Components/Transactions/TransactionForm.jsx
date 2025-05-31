@@ -21,6 +21,17 @@ const validationSchema = Yup.object({
 });
 
 const TransactionForm = () => {
+  const formik = useFormik({
+    initialValues: {
+      type: "",
+      amount: 0,
+      category: "",
+      date: "",
+      description: ""
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => { }
+  })
   return (
     <form
       onSubmit={formik.handleSubmit}

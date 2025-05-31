@@ -10,6 +10,7 @@ import CategoriesList from "./Components/Category/CategoriesList"
 
 import { useSelector } from 'react-redux'
 import UpdateCategory from './Components/Category/UpdateCategory'
+import TransactionForm from './Components/Transactions/TransactionForm'
 
 function App() {
   const user = useSelector((state) => state.auth.user);
@@ -24,6 +25,8 @@ function App() {
         <Route path='/add-category' element={<AddCategory></AddCategory>}></Route>
         <Route path='/categories' element={<CategoriesList></CategoriesList>}></Route>
         <Route path='/update-category/:id' element={<UpdateCategory></UpdateCategory>}></Route>
+        <Route path='/add-transaction' element={<TransactionForm></TransactionForm>}></Route>
+
       </Routes>
     </BrowserRouter>
   )

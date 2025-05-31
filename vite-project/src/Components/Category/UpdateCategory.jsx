@@ -8,7 +8,7 @@ import {
   FaWallet,
 } from "react-icons/fa";
 import { SiDatabricks } from "react-icons/si";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateCategoryAPI } from "../../services/category/categoryServices";
 import AlertMessage from "../Alert/AlertMessage";
@@ -24,6 +24,12 @@ const validationSchema = Yup.object({
 const UpdateCategory = () => {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { mutateAsync, isSuccess, isError, error } = useMutation(
+    {
+      mutationFn: updateCategoryAPI,
+      mutationKey: ['update-category']
+    }
+  )
 
   const formik = useFormik({
     initialValues: {
@@ -37,14 +43,6 @@ const UpdateCategory = () => {
       }).catch(console.log)
     },
   });
-
-  const { mutateAsync, isSuccess, isError, isPending, error } = useMutation(
-    {
-      mutationFn: updateCategoryAPI,
-      mutationKey: ['update-category']
-    }
-  )
-
 
   return (
     <form
