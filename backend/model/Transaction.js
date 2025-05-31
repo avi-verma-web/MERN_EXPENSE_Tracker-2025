@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { validExpenseTypes } = require("../utils/commonUtils");
+const { validExpenseTypes, validCategoryNames } = require("../utils/commonUtils");
 
 const transactionSchema = new mongoose.Schema(
 	{
@@ -16,7 +16,7 @@ const transactionSchema = new mongoose.Schema(
 		category: {
 			type: String,
 			required: true,
-			default: "Uncategorized",
+			default: validCategoryNames.UNCATEGORIZED,
 		},
 		amount: {
 			type: Number,

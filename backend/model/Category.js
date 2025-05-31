@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+const {
+	validExpenseTypes,
+	validCategoryNames,
+} = require("../utils/commonUtils");
 
 const categorySchema = new mongoose.Schema(
 	{
@@ -10,12 +14,12 @@ const categorySchema = new mongoose.Schema(
 		name: {
 			type: String,
 			required: true,
-			default: "Uncategorized",
+			default: validCategoryNames.UNCATEGORIZED,
 		},
 		type: {
 			type: String,
 			required: true,
-			enum: ["income", "expense"],
+			enum: validExpenseTypes,
 		},
 	},
 	{ timestamps: true }
