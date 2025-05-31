@@ -36,9 +36,24 @@ export const listTransactionsAPI = async (filters) => {
 	return response.data;
 };
 
-export const updateTransactionAPI = async ({ userData }) => {
+export const updateTransactionAPI = async (userData) => {
 	const token = getUserFromStorage();
-	const response = await axios.get(`${BASE_URL}/transactions/update/${id}`, {
+	const { type, category, amount, date, description, id } = userData;
+	const response = await axios.put(
+		`${BASE_URL}/transactions/update/${id}`,
+		{ type, category, amount, date, description },
+		{
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+	);
+	return response.data;
+};
+
+export const deleteTransactionAPI = async (id) => {
+	const token = getUserFromStorage();
+	const response = await axios.delete(`${BASE_URL}/transactions/delete/${id}`, {
 		headers: {
 			Authorization: `Bearer ${token}`,
 		},

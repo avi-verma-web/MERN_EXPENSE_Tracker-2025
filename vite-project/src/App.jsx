@@ -27,6 +27,8 @@ function App() {
         <Route path='/categories' element={<CategoriesList></CategoriesList>}></Route>
         <Route path='/update-category/:id' element={<UpdateCategory></UpdateCategory>}></Route>
         <Route path='/add-transaction' element={<TransactionForm></TransactionForm>}></Route>
+        <Route path='/update-transaction/:id' element={<TransactionForm></TransactionForm>}></Route>
+
         <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
 
       </Routes>

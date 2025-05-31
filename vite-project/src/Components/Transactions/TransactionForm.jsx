@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -9,8 +9,9 @@ import {
 } from "react-icons/fa";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { listCategoriesAPI } from "../../services/category/categoryServices";
-import { addTransactionAPI } from "../../services/transactions/transactionServices";
+import { addTransactionAPI, updateTransactionAPI } from "../../services/transactions/transactionServices";
 import AlertMessage from "../Alert/AlertMessage";
+import { useNavigate, useParams } from "react-router-dom";
 
 const validationSchema = Yup.object({
   type: Yup.string()
@@ -25,7 +26,9 @@ const validationSchema = Yup.object({
 });
 
 const TransactionForm = () => {
-  const { data: categories, isError, isLoading, isFetched, error, refetch } = useQuery({
+  const navigate = useNavigate()
+  const { id } = useParams()
+  const { data: categories } = useQuery({
     queryFn: listCategoriesAPI,
     queryKey: ['list-categories']
   })
@@ -34,6 +37,12 @@ const TransactionForm = () => {
     {
       mutationFn: addTransactionAPI,
       mutationKey: ['add-transaction']
+    }
+  )
+  const { mutateAsync: updateTransaction, isPending: isUpdatePending, isError, error, isSuccess } = useMutation(
+    {
+      mutationFn: updateTransactionAPI,
+      mutationKey: ['update-transaction']
     }
   )
 
@@ -47,9 +56,18 @@ const TransactionForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      mutateAsync(values).then(console.log).catch()
+      if (id) {
+        updateTransaction({ ...values, id }).then(console.log).catch()
+      } else {
+        mutateAsync(values).then(console.log).catch()
+      }
     }
   })
+  useEffect(() => {
+    if (isTransactionSuccess || isSuccess) {
+      setTimeout(() => navigate('/dashboard'), 1000)
+    }
+  }, [isTransactionSuccess, isSuccess]);
   return (
     <form
       onSubmit={formik.handleSubmit}
@@ -62,9 +80,9 @@ const TransactionForm = () => {
         <p className="text-gray-600">Fill in the details below.</p>
       </div>
       {/* Display alert message */}
-      {isPending && <AlertMessage type={"loading"} message={"Loading"}></AlertMessage>}
-      {isTransactionError && <AlertMessage type={"error"} message={transactionError.response.data.message}></AlertMessage>}
-      {isTransactionSuccess && <AlertMessage type={"success"} message={"Transaction added successfully"}></AlertMessage>}
+      {isPending || isUpdatePending && <AlertMessage type={"loading"} message={"Loading"}></AlertMessage>}
+      {isTransactionError || isError && <AlertMessage type={"error"} message={(transactionError || error).response.data.message}></AlertMessage>}
+      {isTransactionSuccess || isSuccess && <AlertMessage type={"success"} message={"Transaction added successfully"}></AlertMessage>}
 
       {/* Transaction Type Field */}
       <div className="space-y-2">
@@ -170,9 +188,9 @@ const TransactionForm = () => {
         type="submit"
         className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-200"
       >
-        Submit Transaction
+        {id ? 'Update Transaction' : 'Submit Transaction'}
       </button>
-    </form>
+    </form >
   );
 };
 

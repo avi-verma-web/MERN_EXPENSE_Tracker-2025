@@ -3,21 +3,34 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
-import { listTransactionsAPI } from "../../services/transactions/transactionServices";
+import { deleteTransactionAPI, listTransactionsAPI } from "../../services/transactions/transactionServices";
 import { listCategoriesAPI } from "../../services/category/categoryServices";
+import { useNavigate } from "react-router-dom";
 
 const TransactionList = () => {
+  const navigate = useNavigate()
   const [filters, setFilters] = useState({
     startDate: "",
     endDate: "",
     category: "",
     type: "",
   });
-  const { data: transactions, isError: isTransactionError, isLoading: isTransactionLoading, error: transactionError, refetch: transactionRefetch } = useQuery({
+  const { data: transactions, refetch: refetchTransactions } = useQuery({
     queryFn: () => listTransactionsAPI(filters),
     queryKey: ['list-transactions', filters]
   })
-  const { data: categories, isError, isLoading, error, refetch } = useQuery({ queryFn: listCategoriesAPI, queryKey: ['list-categories'] })
+  const { data: categories } = useQuery({ queryFn: listCategoriesAPI, queryKey: ['list-categories'] })
+  const { mutateAsync: deleteTransactionMutateAsync } = useMutation(
+    {
+      mutationFn: deleteTransactionAPI,
+      mutationKey: ['delete-transaction']
+    }
+  )
+  const handleDelete = (id) => {
+    deleteTransactionMutateAsync(id).then(data => {
+      refetchTransactions()
+    }).catch(console.log)
+  }
 
   const handleFilterChange = (e) => {
     e.preventDefault()
@@ -27,8 +40,9 @@ const TransactionList = () => {
     })
   }
 
-  const handleUpdateTransaction = (id) => { }
-  const handleDelete = (id) => { }
+  const handleUpdateTransaction = (id) => {
+    navigate(`/update-transaction/${id}`)
+  }
 
   return (
     <div className="my-4 p-4 shadow-lg rounded-lg bg-white">
