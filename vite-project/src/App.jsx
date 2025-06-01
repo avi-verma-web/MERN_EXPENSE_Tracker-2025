@@ -13,6 +13,7 @@ import UpdateCategory from './Components/Category/UpdateCategory'
 import TransactionForm from './Components/Transactions/TransactionForm'
 import Dashboard from './Components/Users/Dashboard'
 import UserProfile from './Components/Users/UserProfile'
+import AuthRoute from './Components/AuthRoute/AuthRoute'
 
 function App() {
   const user = useSelector((state) => state.auth.user);
@@ -22,15 +23,35 @@ function App() {
       {user ? <PrivateNavbar></PrivateNavbar> : <PublicNavbar></PublicNavbar>}
       <Routes>
         <Route path='/' element={<HeroSection></HeroSection>}></Route>
-        <Route path='/login' element={<LoginForm></LoginForm>}></Route>
-        <Route path='/register' element={<RegistrationForm></RegistrationForm>}></Route>
-        <Route path='/add-category' element={<AddCategory></AddCategory>}></Route>
-        <Route path='/categories' element={<CategoriesList></CategoriesList>}></Route>
-        <Route path='/update-category/:id' element={<UpdateCategory></UpdateCategory>}></Route>
-        <Route path='/add-transaction' element={<TransactionForm></TransactionForm>}></Route>
-        <Route path='/update-transaction/:id' element={<TransactionForm></TransactionForm>}></Route>
-        <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
-        <Route path='/profile' element={<UserProfile></UserProfile>}></Route>
+        <Route path='/login' element={<AuthRoute requiresAuth={false}>
+          <LoginForm></LoginForm>
+        </AuthRoute>}></Route>
+        <Route path='/register' element={<AuthRoute requiresAuth={false}>
+          <RegistrationForm></RegistrationForm>
+        </AuthRoute>}></Route>
+        <Route path='/add-category' element={<AuthRoute>
+          <AddCategory></AddCategory>
+        </AuthRoute>}></Route>
+        <Route path='/categories' element={<AuthRoute>
+          <CategoriesList></CategoriesList>
+        </AuthRoute>}></Route>
+        <Route path='/update-category/:id' element={<AuthRoute>
+          <UpdateCategory></UpdateCategory>
+        </AuthRoute>}></Route>
+        <Route path='/add-transaction' element={<AuthRoute>
+          <TransactionForm></TransactionForm>
+        </AuthRoute>}></Route>
+        <Route path='/update-transaction/:id' element={<AuthRoute>
+          <TransactionForm></TransactionForm>
+        </AuthRoute>}></Route>
+        <Route path='/dashboard' element={<AuthRoute>
+          <Dashboard></Dashboard>
+        </AuthRoute>}></Route>
+        <Route path='/profile' element={<AuthRoute>
+          <UserProfile></UserProfile>
+        </AuthRoute>
+        }>
+        </Route>
       </Routes>
     </BrowserRouter>
   )

@@ -47,8 +47,8 @@ const UserProfile = () => {
         {isError && <AlertMessage type={"success"} message={error.response.data.message}></AlertMessage>}
 
         <h1 className="mb-2 text-2xl text-center font-extrabold">
-          Welcome Masynctech
-          <span className="text-gray-500 text-sm ml-2">info@gmail.com</span>
+          Welcome {userProfile?.username}
+          <span className="text-gray-500 text-sm ml-2">{userProfile?.email}</span>
         </h1>
         <h3 className="text-xl font-semibold text-gray-800 mb-4">
           Update Profile

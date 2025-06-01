@@ -47,7 +47,7 @@ export default function PrivateNavbar() {
                     to="/"
                     className="inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
                   >
-                    MasyncTracker
+                    MernExpenseTracker
                   </Link>
                 </div>
                 <div className="hidden md:ml-6 md:flex md:space-x-8">
@@ -126,19 +126,6 @@ export default function PrivateNavbar() {
                             </Link>
                           )}
                         </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              // onClick={logoutHandler}
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Sign out
-                            </button>
-                          )}
-                        </Menu.Item>
                       </Menu.Items>
                     </Transition>
                   </Menu>
@@ -154,7 +141,7 @@ export default function PrivateNavbar() {
                   as="button"
                   className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
                 >
-                  MasyncTracker
+                  MernExpenseTracker
                 </Disclosure.Button>
               </Link>
               <Link to="/add-transaction">
@@ -199,17 +186,7 @@ export default function PrivateNavbar() {
               </Link>
             </div>
             {/* Profile links */}
-            <div className="border-t border-gray-200 pb-3 pt-4">
-              <div className="mt-3 space-y-1">
-                <Disclosure.Button
-                  as="button"
-                  // onClick={logoutHandler}
-                  className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
-                >
-                  Sign out
-                </Disclosure.Button>
-              </div>
-            </div>
+
           </Disclosure.Panel>
         </>
       )}

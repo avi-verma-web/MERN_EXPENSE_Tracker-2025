@@ -37,7 +37,7 @@ export default function PublicNavbar() {
                     to="/"
                     className="inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
                   >
-                    MasyncTracker
+                    MernExpenseTracker
                   </Link>
                 </div>
               </div>
@@ -52,7 +52,7 @@ export default function PublicNavbar() {
                   </Link>
                   <Link
                     to="/login"
-                    className="relative ml-2 inline-flex items-center gap-x-1.5 rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 animate-bounce"
+                    className="relative ml-2 inline-flex items-center gap-x-1.5 rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     <RiLoginCircleLine
                       className="-ml-0.5 h-5 w-5"
@@ -80,7 +80,7 @@ export default function PublicNavbar() {
                   as="button"
                   className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
                 >
-                  MasyncTracker
+                  MernExpenseTracker
                 </Disclosure.Button>
               </Link>
 
