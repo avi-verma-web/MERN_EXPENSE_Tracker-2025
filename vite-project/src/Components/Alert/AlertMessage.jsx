@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiOutlineCheckCircle,
   AiOutlineCloseCircle,
@@ -10,6 +10,20 @@ const AlertMessage = ({ type, message }) => {
   let bgColor;
   let textColor;
   let borderLeftColor;
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    if (visible) {
+      setVisible(true);
+      const timer = setTimeout(() => {
+        setVisible(false);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [visible]);
+
+  if (!visible) return null;
 
   switch (type) {
     case "error":

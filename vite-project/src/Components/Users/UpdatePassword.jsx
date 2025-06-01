@@ -2,25 +2,34 @@ import React, { useState } from "react";
 import { AiOutlineLock } from "react-icons/ai";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useMutation } from "@tanstack/react-query";
+import { changePasswordAPI } from "../../services/users/userServices";
+import AlertMessage from "../Alert/AlertMessage";
 const validationSchema = Yup.object({
   password: Yup.string()
-    .min(5, "Password must be at least 5 characters long")
+    .min(6, "Password must be at least 6 characters long")
     .required("Email is required"),
 });
 const UpdatePassword = () => {
+  const { mutateAsync, isSuccess, isError, error, isPending } = useMutation({
+    mutationFn: changePasswordAPI,
+    mutationKey: ['change-password']
+  });
   const formik = useFormik({
     initialValues: {
-      password: "123456",
+      password: "",
     },
     // Validations
-    validationSchema,
+    validationSchema: validationSchema,
     //Submit
     onSubmit: (values) => {
-      console.log(values);
+      const { password } = values;
+      mutateAsync(password).then(console.log).catch(console.log)
     },
   });
   return (
     <div className="flex flex-col items-center justify-center p-4">
+      {isSuccess && <AlertMessage type={"success"} message={"Password updated successfully"}></AlertMessage>}
       <h2 className="text-lg font-semibold mb-4">Change Your Password</h2>
       <form onSubmit={formik.handleSubmit} className="w-full max-w-xs">
         <div className="mb-4">
@@ -36,7 +45,7 @@ const UpdatePassword = () => {
               id="new-password"
               type="password"
               name="newPassword"
-              {...formik.getFieldProps("email")}
+              {...formik.getFieldProps("password")}
               className="outline-none flex-1"
               placeholder="Enter new password"
             />
