@@ -14,6 +14,11 @@ transactionRouter.get(
 	isAuthenticated,
 	transactionController.getFilteredTransactions
 );
+transactionRouter.get(
+	"/api/v1/transactions/transaction/:id",
+	isAuthenticated,
+	transactionController.getTransactionById
+);
 transactionRouter.put(
 	"/api/v1/transactions/update/:id",
 	isAuthenticated,

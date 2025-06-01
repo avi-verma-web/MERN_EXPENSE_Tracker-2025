@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { listCategoriesAPI } from "../../services/category/categoryServices";
-import { addTransactionAPI, updateTransactionAPI } from "../../services/transactions/transactionServices";
+import { addTransactionAPI, getTransactionByIdAPI, updateTransactionAPI } from "../../services/transactions/transactionServices";
 import AlertMessage from "../Alert/AlertMessage";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -33,6 +33,11 @@ const TransactionForm = () => {
     queryKey: ['list-categories']
   })
 
+  const { data: singleTransaction } = useQuery({
+    queryFn: () => getTransactionByIdAPI(id),
+    queryKey: ['get-transaction', id]
+  })
+
   const { mutateAsync, isPending, isError: isTransactionError, error: transactionError, isSuccess: isTransactionSuccess } = useMutation(
     {
       mutationFn: addTransactionAPI,
@@ -48,13 +53,16 @@ const TransactionForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      type: "",
-      amount: "",
-      category: "",
-      date: "",
-      description: ""
+      type: singleTransaction?.type || "",
+      amount: singleTransaction?.amount || "",
+      category: singleTransaction?.category || "",
+      date: singleTransaction?.date
+        ? new Date(singleTransaction.date).toISOString().slice(0, 10)
+        : "",
+      description: singleTransaction?.description || ""
     },
     validationSchema: validationSchema,
+    enableReinitialize: true,
     onSubmit: (values) => {
       if (id) {
         updateTransaction({ ...values, id }).then(console.log).catch()

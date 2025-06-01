@@ -60,3 +60,16 @@ export const deleteTransactionAPI = async (id) => {
 	});
 	return response.data;
 };
+
+export const getTransactionByIdAPI = async (id) => {
+	const token = getUserFromStorage();
+	const response = await axios.get(
+		`${BASE_URL}/transactions/transaction/${id}`,
+		{
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+	);
+	return response.data;
+};

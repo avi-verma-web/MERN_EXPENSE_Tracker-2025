@@ -49,7 +49,7 @@ const transactionController = {
 			transaction.date = date || transaction.date;
 			transaction.description = description || transaction.description;
 			const updatedTransaction = await transaction.save();
-			res.json(updatedTransaction);
+			return res.json(updatedTransaction);
 		}
 		throw new Error("Transaction not found or user not authorized!");
 	}),
@@ -57,9 +57,14 @@ const transactionController = {
 		const transaction = await Transaction.findById(req.params.id);
 		if (transaction && transaction.user.toString() === req.user.toString()) {
 			await Transaction.findByIdAndDelete(req.params.id);
-			res.json({ message: "Transaction is removed" });
+			return res.json({ message: "Transaction is removed" });
 		}
 		throw new Error("Transaction not found or user not authorized!");
+	}),
+	getTransactionById: asyncHandler(async (req, res) => {
+		const { id } = req.params;
+		const transaction = await Transaction.findById(id);
+		res.json(transaction);
 	}),
 };
 module.exports = transactionController;
