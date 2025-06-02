@@ -23,8 +23,8 @@ const LoginForm = () => {
   });
   const formik = useFormik({
     initialValues: {
-      email: "masyn@gmail11.com",
-      password: "1234567"
+      email: "",
+      password: ""
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
