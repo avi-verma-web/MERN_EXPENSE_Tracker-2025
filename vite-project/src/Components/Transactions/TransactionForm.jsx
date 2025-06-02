@@ -35,7 +35,8 @@ const TransactionForm = () => {
 
   const { data: singleTransaction } = useQuery({
     queryFn: () => getTransactionByIdAPI(id),
-    queryKey: ['get-transaction', id]
+    queryKey: ['get-transaction', id],
+    enabled: !!id 
   })
 
   const { mutateAsync, isPending, isError: isTransactionError, error: transactionError, isSuccess: isTransactionSuccess } = useMutation(
