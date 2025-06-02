@@ -109,10 +109,10 @@ const HeroSection = () => {
       <div className="bg-blue-500 text-white py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold">
-            Ready to Take Control of Your Finances?
+            Created by
           </h2>
           <p className="mt-4">
-            Join us now and start managing your expenses like a pro!
+            Avinash Verma
           </p>
           <Link to="/register">
             <button className="mt-8 px-6 py-3 bg-white text-blue-500 font-semibold rounded-lg shadow-md hover:bg-gray-100 transition duration-300">
