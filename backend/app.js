@@ -18,7 +18,11 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 app.use(
 	cors({
-		origin: ["http://localhost:5173"],
+		origin: [
+			"http://localhost:5173",
+			"https://mern-expense-tracker-2025-frontend.onrender.com", // your frontend on Render
+			"https://your-frontend.netlify.app",
+		],
 	})
 );
 // req.body parser
