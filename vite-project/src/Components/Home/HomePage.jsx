@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 const HeroSection = () => {
   return (
     <>
-      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white py-20 px-4">
+      <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white py-20 px-4">
         <div className="max-w-7xl mx-auto flex flex-col items-center">
           {/* Heading */}
           <h1 className="text-5xl font-bold text-center">
